@@ -8,9 +8,11 @@ A modern, modular Neovim configuration built for professional development.
 
 - **Lazy Loading**: Fast startup with lazy.nvim plugin manager
 - **LSP Support**: Full language server integration with auto-installation
+- **Format on Save**: Automatic formatting with Prettier and other formatters
+- **Linting**: ESLint integration with real-time diagnostics
 - **Modern UI**: Catppuccin theme, bufferline tabs, smooth scrolling
 - **Fuzzy Finding**: Telescope for files, grep, and more
-- **Git Integration**: Gitsigns, git status in file explorer
+- **Git Integration**: Gitsigns, inline blame, diff view, file history
 - **Treesitter**: Syntax highlighting and code navigation
 - **Auto-completion**: nvim-cmp with snippets support
 
@@ -57,12 +59,14 @@ sudo pacman -S fd ripgrep
    
    On first launch, lazy.nvim will automatically install all plugins.
 
-4. **Install LSP servers**:
+4. **Install LSP servers and tools**:
    ```vim
-   :Mason
+   :Lazy sync
+   :MasonToolsInstall
    ```
    
-   Servers are auto-installed, but you can manage them here.
+   This installs LSP servers, formatters (Prettier, Stylua), and linters (ESLint).
+   You can also manage tools manually with `:Mason`.
 
 ## Directory Structure
 
@@ -81,8 +85,11 @@ sudo pacman -S fd ripgrep
 │       ├── cmp.lua             # Autocompletion
 │       ├── colorscheme.lua     # Catppuccin theme
 │       ├── comment.lua         # Code commenting
-│       ├── gitsigns.lua        # Git signs in gutter
+│       ├── diffview.lua        # Git diff viewer
+│       ├── formatting.lua      # Format on save (Prettier, etc.)
+│       ├── gitsigns.lua        # Git signs in gutter + inline blame
 │       ├── indent-blankline.lua # Indent guides
+│       ├── linting.lua         # ESLint and other linters
 │       ├── lsp.lua             # Language Server Protocol
 │       ├── lualine.lua         # Statusline
 │       ├── nvim-tree.lua       # File explorer
@@ -190,12 +197,38 @@ sudo pacman -S fd ripgrep
 | `<leader>hR` | Normal | Reset buffer |
 | `<leader>hu` | Normal | Undo stage hunk |
 | `<leader>hp` | Normal | Preview hunk |
-| `<leader>hb` | Normal | Blame line |
-| `<leader>hB` | Normal | Toggle line blame |
+| `<leader>hb` | Normal | Blame line (full) |
+| `<leader>hB` | Normal | Toggle inline blame |
 | `<leader>hd` | Normal | Diff this |
 | `<leader>gc` | Normal | Git commits |
 | `<leader>gb` | Normal | Git branches |
 | `<leader>gs` | Normal | Git status |
+
+### Diff View
+
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>gd` | Normal | Open diff view (all changes) |
+| `<leader>gD` | Normal | Diff with previous commit |
+| `<leader>gh` | Normal | File history (current file) |
+| `<leader>gH` | Normal | File history (entire repo) |
+| `<leader>gq` | Normal | Close diff view |
+
+### Formatting
+
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>cf` | Normal/Visual | Format document/selection (LSP) |
+| `<leader>cF` | Normal/Visual | Format buffer (Conform/Prettier) |
+| `<leader>uf` | Normal | Toggle format on save |
+| `:FormatDisable` | Command | Disable format on save |
+| `:FormatEnable` | Command | Enable format on save |
+
+### Linting
+
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>cl` | Normal | Trigger linting manually |
 
 ### Editing
 
@@ -266,6 +299,7 @@ sudo pacman -S fd ripgrep
 | `<leader>uw` | Normal | Toggle word wrap |
 | `<leader>ul` | Normal | Toggle relative numbers |
 | `<leader>us` | Normal | Toggle spell check |
+| `<leader>uf` | Normal | Toggle format on save |
 
 ### Completion (Insert Mode)
 
@@ -302,6 +336,10 @@ sudo pacman -S fd ripgrep
 | [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim) | Indent guides |
 | [neoscroll.nvim](https://github.com/karb94/neoscroll.nvim) | Smooth scrolling |
 | [fidget.nvim](https://github.com/j-hui/fidget.nvim) | LSP progress |
+| [conform.nvim](https://github.com/stevearc/conform.nvim) | Format on save (Prettier, etc.) |
+| [nvim-lint](https://github.com/mfussenegger/nvim-lint) | Linting (ESLint, etc.) |
+| [diffview.nvim](https://github.com/sindrets/diffview.nvim) | Git diff viewer |
+| [mason-tool-installer](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim) | Auto-install formatters/linters |
 
 ## LSP Servers
 
