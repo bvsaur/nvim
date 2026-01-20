@@ -1,0 +1,57 @@
+# ============================================================================
+# Neovim Configuration .gitignore
+# ============================================================================
+
+# Plugin manager lockfile (optional - some prefer to track this)
+# Uncomment the next line if you want to track exact plugin versions
+lazy-lock.json
+
+# Plugin data and cache
+plugin/
+
+# Neovim swap, backup, and undo files
+*.swp
+*.swo
+*~
+.netrwhist
+
+# Compiled Lua bytecode
+*.luac
+luac.out
+
+# Local spell files
+spell/*.add
+spell/*.spl
+spell/*.sug
+
+# Session files
+Session.vim
+*.session
+
+# Shada (shared data) files
+*.shada
+*.shada.tmp
+
+# Local configuration (for machine-specific settings)
+lua/config/local.lua
+local.lua
+
+# LSP and tool data
+.null-ls_*
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Neovim log files
+.nvim.log
+
+# Tags
+tags
+tags.lock
+tags.temp
+
+# Temporary files
+*.tmp
+*.temp
