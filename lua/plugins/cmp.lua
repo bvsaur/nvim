@@ -33,6 +33,7 @@ return {
       "hrsh7th/cmp-path",          -- Path completions
       "hrsh7th/cmp-cmdline",       -- Command line completions
       "saadparwaiz1/cmp_luasnip",  -- Snippet completions
+      "zbirenbaum/copilot-cmp",    -- GitHub Copilot completions
     },
 
     config = function()
@@ -118,12 +119,14 @@ return {
               Event = "",
               Operator = "󰆕",
               TypeParameter = "",
+              Copilot = "",
             }
 
             vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind] or "", vim_item.kind)
 
             -- Source names
             vim_item.menu = ({
+              copilot = "[AI]",
               nvim_lsp = "[LSP]",
               luasnip = "[Snip]",
               buffer = "[Buf]",
@@ -183,10 +186,11 @@ return {
 
         -- Completion sources (order matters for priority)
         sources = cmp.config.sources({
-          { name = "nvim_lsp", priority = 1000 },
-          { name = "luasnip", priority = 750 },
-          { name = "buffer", priority = 500, keyword_length = 3 },
-          { name = "path", priority = 250 },
+          { name = "copilot", priority = 1100, group_index = 1 },
+          { name = "nvim_lsp", priority = 1000, group_index = 1 },
+          { name = "luasnip", priority = 750, group_index = 1 },
+          { name = "buffer", priority = 500, keyword_length = 3, group_index = 1 },
+          { name = "path", priority = 250, group_index = 1 },
         }),
 
         -- Experimental features
@@ -196,19 +200,26 @@ return {
           },
         },
 
-        -- Sorting
+        -- Sorting (Copilot suggestions surface first when ranked well)
         sorting = {
           priority_weight = 2,
-          comparators = {
-            cmp.config.compare.offset,
-            cmp.config.compare.exact,
-            cmp.config.compare.score,
-            cmp.config.compare.recently_used,
-            cmp.config.compare.locality,
-            cmp.config.compare.kind,
-            cmp.config.compare.length,
-            cmp.config.compare.order,
-          },
+          comparators = (function()
+            local comparators = {
+              cmp.config.compare.offset,
+              cmp.config.compare.exact,
+              cmp.config.compare.score,
+              cmp.config.compare.recently_used,
+              cmp.config.compare.locality,
+              cmp.config.compare.kind,
+              cmp.config.compare.length,
+              cmp.config.compare.order,
+            }
+            local ok, copilot_compare = pcall(require, "copilot_cmp.comparators")
+            if ok then
+              table.insert(comparators, 1, copilot_compare.prioritize)
+            end
+            return comparators
+          end)(),
         },
       })
 

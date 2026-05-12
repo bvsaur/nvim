@@ -21,6 +21,9 @@ map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 -- Save file with Ctrl+S (works in all modes)
 map({ "n", "i", "x", "s" }, "<C-s>", "<cmd>w<CR><Esc>", { desc = "Save file" })
 
+-- Save file without formatting
+map("n", "<leader>W", "<cmd>noautocmd w<CR>", { desc = "Save without formatting" })
+
 -- Quit
 map("n", "<leader>qq", "<cmd>qa<CR>", { desc = "Quit all" })
 
@@ -91,9 +94,9 @@ map("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 map("v", "<", "<gv", { desc = "Indent left" })
 map("v", ">", ">gv", { desc = "Indent right" })
 
--- Duplicate line/selection
-map("n", "<leader>d", "<cmd>t.<CR>", { desc = "Duplicate line" })
-map("v", "<leader>d", ":t'><CR>gv", { desc = "Duplicate selection" })
+-- Duplicate line/selection (moved to <leader>D — <leader>d is the Debug group)
+map("n", "<leader>D", "<cmd>t.<CR>", { desc = "Duplicate line" })
+map("v", "<leader>D", ":t'><CR>gv", { desc = "Duplicate selection" })
 
 -- Join lines without moving cursor
 map("n", "J", "mzJ`z", { desc = "Join lines" })
@@ -172,10 +175,12 @@ map("t", "<C-j>", "<cmd>wincmd j<CR>", { desc = "Go to lower window" })
 map("t", "<C-k>", "<cmd>wincmd k<CR>", { desc = "Go to upper window" })
 map("t", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Go to right window" })
 
--- Open terminal
-map("n", "<leader>tt", "<cmd>terminal<CR>", { desc = "Open terminal" })
-map("n", "<leader>tv", "<cmd>vsplit | terminal<CR>", { desc = "Terminal (vertical split)" })
-map("n", "<leader>ts", "<cmd>split | terminal<CR>", { desc = "Terminal (horizontal split)" })
+-- Terminal opening is handled by toggleterm.nvim:
+--   <C-\>         Toggle (default)
+--   <leader>tf    Floating terminal
+--   <leader>th    Horizontal terminal
+--   <leader>tV    Vertical terminal
+--   <leader>tg    LazyGit
 
 -- ============================================================================
 -- Diagnostic Navigation

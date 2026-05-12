@@ -96,7 +96,7 @@ return {
             git = true,
             modified = true,
             diagnostics = true,
-            bookmarks = true,
+            bookmarks = false,
           },
           glyphs = {
             default = "",

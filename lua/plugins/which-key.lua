@@ -103,15 +103,20 @@ return {
       -- Register key groups for better organization
       wk.add({
         -- Top-level groups
+        { "<leader>a", group = "AI/Claude" },
         { "<leader>b", group = "Buffer" },
         { "<leader>c", group = "Code" },
         { "<leader>cw", group = "Workspace" },
+        { "<leader>d", group = "Debug" },
+        { "<leader>dP", group = "Python Debug" },
         { "<leader>f", group = "Find/File" },
         { "<leader>g", group = "Git" },
         { "<leader>h", group = "Git Hunk" },
         { "<leader>l", group = "LSP" },
-        { "<leader>q", group = "Quit" },
+        { "<leader>q", group = "Quit/Session" },
+        { "<leader>r", group = "Run/Test" },
         { "<leader>s", group = "Search" },
+        { "<leader>sn", group = "Noice" },
         { "<leader>t", group = "Terminal" },
         { "<leader>u", group = "UI/Toggle" },
         { "<leader>w", group = "Window" },
